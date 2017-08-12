@@ -11,7 +11,7 @@ WORKDIR /usr/src/app
 # Install node modules, including i2c-bus without carrying all the deps in the layers
 RUN apk add --no-cache make gcc g++ python && \
   JOBS=MAX npm install -g serialport node-red-admin i2c node-red node-red-contrib-resinio node-red-node-serialport \
-  node-red-contrib-brads-i2c-nodes node-red-contrib-grovepi node-red-node-grovepi node-red-contrib-1wire \
+  node-red-contrib-brads-i2c-nodes node-red-contrib-grovepi node-red-node-grovepi node-red-grovepi-nodes node-red-contrib-1wire \
   ds18b20 node-red-contrib-sensor-ds18b20 node-red-contrib-ds18b20-sensor node-red-contrib-ds18b20 --production --silent && \
   npm cache clean --force && rm -rf /tmp/*
 
