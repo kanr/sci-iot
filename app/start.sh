@@ -7,7 +7,7 @@ mkdir -p /data/node-red/user/lib/flows || true
 cp /usr/src/app/flows/* /data/node-red/user/lib/flows/
 
 # Start app
-node-red --settings /usr/src/app/settings.js
+# node-red --settings /usr/src/app/settings.js
 
 # using local electron module instead of the global electron lets you
 # easily control specific version dependency between your app and electron itself.
