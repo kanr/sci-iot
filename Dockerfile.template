@@ -34,7 +34,7 @@ node-red-grovepi-nodes node-red-contrib-1wire \
 #node-red-contrib-ds18b20 \
 node-red-contrib-bigtimer \
 node-red-contrib-couchdb \
-node-red-contrib-gpio raspi-io debug firmata johnny-five lodash meshblu mqtt-serial node-led skynet-serial udp-serial mqtt \
+node-red-contrib-gpio pigpio raspi-io debug firmata johnny-five lodash meshblu mqtt-serial node-led skynet-serial udp-serial mqtt \
 node-red-dashboard \
 && \
 npm cache clean --force && rm -rf /tmp/*
