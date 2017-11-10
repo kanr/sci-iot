@@ -37,7 +37,7 @@ node-red-contrib-couchdb \
 #node-red-contrib-gpio raspi-io \
 node-red-dashboard \
 && \
-npm cache clean && rm -rf /tmp/*
+npm cache clean --force && rm -rf /tmp/*
 
 #RUN apk del make gcc g++ python
 
