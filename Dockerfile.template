@@ -27,14 +27,14 @@ node-grovepi \
 sleep \
 node-red-contrib-grovepi \
 #node-red-node-grovepi \
-#node-red-grovepi-nodes node-red-contrib-1wire \
+node-red-grovepi-nodes node-red-contrib-1wire \
 #ds18b20 \
 #node-red-contrib-sensor-ds18b20 \
 #node-red-contrib-ds18b20-sensor \
 #node-red-contrib-ds18b20 \
 node-red-contrib-bigtimer \
 node-red-contrib-couchdb \
-#node-red-contrib-gpio raspi-io \
+node-red-contrib-gpio raspi-io debug snappy-io-nodes\
 node-red-dashboard \
 && \
 npm cache clean --force && rm -rf /tmp/*
