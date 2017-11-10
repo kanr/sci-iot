@@ -8,73 +8,41 @@ FROM resin/%%RESIN_MACHINE_NAME%%-alpine-node:latest
 RUN mkdir -p /usr/src/app/
 WORKDIR /usr/src/app
 
-# Install apt deps
-RUN apk add \
-  apt-utils \
-  xserver-xorg-core \
-  xserver-xorg-input-all \
-  xserver-xorg-video-fbdev \
-  xorg \
-  libdbus-1-dev \
-  libgtk2.0-dev \
-  libnotify-dev \
-  libgnome-keyring-dev \
-  libgconf2-dev \
-  libasound2-dev \
-  libcap-dev \
-  libcups2-dev \
-  libxtst-dev \
-  libxss1 \
-  libnss3-dev \
-  fluxbox \
-  libsmbclient \
-  libssh-4 \
-  fbset \
-  libexpat-dev && rm -rf /var/lib/apt/lists/*
-
-# Set Xorg and FLUXBOX preferences
-RUN mkdir ~/.fluxbox
-RUN echo "xset s off" > /root/.fluxbox/startup && echo "xserver-command=X -s 0 dpms -nocursor" >> ~/.fluxbox/startup
-RUN echo "exec /usr/bin/startfluxbox" > /root/.xinitrc \
-
 # Set npm
 RUN npm config set unsafe-perm true
 
-# Save source folder
-RUN printf "%s\n" "${PWD##}" > SOURCEFOLDER
-
-# Install node modules, including i2c-bus without carrying all the deps in the layers
-RUN apk add --no-cache make gcc g++ python && \
-  JOBS=MAX npm install -g \
-  serialport \
-  node-red-admin \
-  i2c \
-  i2c-bus \
-  node-red-contrib-i2c \
-  node-red \
-  node-red-contrib-resinio \
-  node-red-node-serialport \
-  node-red-contrib-brads-i2c-nodes \
-  node-grovepi sleep node-red-contrib-grovepi \
-  node-red-node-grovepi \
-  node-red-grovepi-nodes node-red-contrib-1wire \
-  ds18b20 \
-  node-red-contrib-sensor-ds18b20 \
-  node-red-contrib-ds18b20-sensor \
-  node-red-contrib-ds18b20 \
-  node-red-contrib-bigtimer \
-  node-red-contrib-couchdb \
-  node-red-dashboard \
-  --production --silent && \
-  npm cache clean --force && rm -rf /tmp/*
+# This install npm dependencies on the resin.io build server,
+# making sure to clean up the artifacts it creates in order to reduce the image size.
+RUN JOBS=MAX npm install -g node-red \
+node-red-contrib-resinio \
+serialport \
+node-red-admin \
+node-red-contrib-os \
+#i2c \
+#i2c-bus \
+#node-red-contrib-i2c \
+#node-red-contrib-brads-i2c-nodes \
+node-red-node-serialport \
+node-grovepi \
+sleep \
+node-red-contrib-grovepi \
+#node-red-node-grovepi \
+#node-red-grovepi-nodes node-red-contrib-1wire \
+#ds18b20 \
+#node-red-contrib-sensor-ds18b20 \
+#node-red-contrib-ds18b20-sensor \
+#node-red-contrib-ds18b20 \
+node-red-contrib-bigtimer \
+node-red-contrib-couchdb \
+#node-red-contrib-gpio raspi-io \
+node-red-dashboard \
+&& \
+  npm i --production && npm cache clean && rm -rf /tmp/*
 
 #RUN apk del make gcc g++ python
 
 # This will copy all files in our root to the working  directory in the container
 # COPY ./app ./
-
-# Move package.json to filesystem
-COPY "$SOURCEFOLDER/app/package.json" ./
 
 # Enable systemd init system in container
 ENV INITSYSTEM=on
